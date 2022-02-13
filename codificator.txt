@@ -1,0 +1,55 @@
+module codif(x,y,z,a,b);
+	input x, y, z;
+	output reg a, b;
+	
+	initial begin
+		a=0;
+		b=0;
+	end
+	
+	always@(*)
+	begin
+		if((x==0)&&(y==0)&&(z==0))
+		begin
+			a=0;
+			b=0;
+		end
+		
+		else if((x==1)&&(y==0)&&(z==0))
+		begin
+			a=0;
+			b=1;
+		end
+		
+		else if((x==0)&&(y==1)&&(z==0))
+		begin
+			a=1;
+			b=0;
+		end
+		
+		else if((x==0)&&(y==0)&&(z==1))
+		begin
+			a=1;
+			b=1;
+		end
+	end
+endmodule
+
+module simulare;
+	reg x,y,z;
+	wire a,b;
+	
+	codif codif1(x,y,z,a,b);
+	
+	initial begin
+		#0 x=0;y=0;z=0;
+		#10 x=1;y=0;z=0;
+		#10 x=0;y=1;z=0;
+		#10 x=0;y=0;z=1;
+	end
+	
+	initial begin
+		$monitor($time,"    %b  %b  %b -> %b  %b",x,y,z,a,b);
+		$display("\t       Timer    x  y  z -> a  b");
+	end
+endmodule

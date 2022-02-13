@@ -1,0 +1,46 @@
+module decodif(a,b,c,d,y);
+	input a, b, c, d;
+	output [9:0]y;
+	
+	wire not_a, not_b, not_c, not_d;
+	not n1(not_a,a);
+	not n2(not_b,b);
+	not n3(not_c,c);
+	not n4(not_d,d);
+	
+	and a0(y[0],not_a,not_b,not_c,not_d);
+	and a1(y[1],a,not_b,not_c,not_d);
+	and a2(y[2],not_a,b,not_c,not_d);
+	and a3(y[3],a,b,not_c,not_d);
+	and a4(y[4],not_a,not_b,c,not_d);
+	and a5(y[5],a,not_b,c,not_d);
+	and a6(y[6],not_a,b,c,not_d);
+	and a7(y[7],a,b,c,not_d);
+	and a8(y[8],not_a,not_b,not_c,d);
+	and a9(y[9],a,not_b,not_c,d);
+endmodule
+
+module simulare;
+	reg a,b,c,d;
+	wire [9:0]y;
+	
+	decodif decodif1(a,b,c,d,y);
+	
+	initial begin
+		#0 a=0;b=0;c=0;d=0;
+		#10 a=1;b=0;c=0;d=0;
+		#10 a=0;b=1;c=0;d=0;
+		#10 a=1;b=1;c=0;d=0;
+		#10 a=0;b=0;c=1;d=0;
+		#10 a=1;b=0;c=1;d=0;
+		#10 a=0;b=1;c=1;d=0;
+		#10 a=1;b=1;c=1;d=0;
+		#10 a=0;b=0;c=0;d=1;
+		#10 a=1;b=0;c=0;d=1;
+	end
+	
+	initial begin
+		$monitor($time,"    %b  %b  %b  %b -> %b",a,b,c,d,y[9:0]);
+		$display("\t       Timer    a  b  c  d -> y ");
+	end
+endmodule
